@@ -1,0 +1,36 @@
+int comp(const void*a,const void*b)
+{
+    return *(int*)a-*(int*)b;
+}
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* twoSum(int* nums, int numsSize, int target) 
+{
+    int *res = (int*)malloc(2 * sizeof(int));
+    register x=0;
+    register y=numsSize-1;
+    register mid = (numsSize+1) >> 1;
+    register sum;
+    
+    qsort(nums, numsSize, sizeof(int), comp);
+    
+    while(1)
+    {
+        sum = nums[x]+nums[y];
+        res[0] = x;
+        res[1] = y;
+        if( sum == target)
+        {
+            printf("[%d]%d,{%d}%d", x,nums[x],y,nums[y]);
+            break;
+        }
+        else if(sum > target)
+            y = mid;
+        else
+            x = mid;
+        mid = (x + y) >> 1;
+    }
+    return res;
+}
